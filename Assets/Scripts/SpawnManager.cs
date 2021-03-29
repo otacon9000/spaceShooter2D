@@ -12,7 +12,6 @@ public class SpawnManager : MonoBehaviour
     private GameObject _tripleShotPowerUpPrefab;
     [SerializeField]
     private WaitForSeconds _waitEnemy = new WaitForSeconds(5.0f);
-    //private WaitForSeconds _waitPowerUp = new WaitForSeconds(10.0f);
 
 
     private bool _stopSpawn = false;

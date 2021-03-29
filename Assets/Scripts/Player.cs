@@ -76,7 +76,6 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        //_tripleShotActive = false;
         _lives--;
         if(_lives < 1)
         {
@@ -87,7 +86,6 @@ public class Player : MonoBehaviour
 
     public void ActiveTripleShot()
     {
-        //_tripleShotActive = true;
         StartCoroutine(TripleShotRoutine());
     }
 
