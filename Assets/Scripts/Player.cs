@@ -7,11 +7,13 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 5.0f;
-    private float _speedMultiplier = 2f; 
+    private float _speedMultiplier = 2f;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private GameObject _shieldsVisualizer;
     [SerializeField]
     private Vector3 _offset = Vector3.up;
     [SerializeField]
@@ -23,12 +25,13 @@ public class Player : MonoBehaviour
 
     private bool _tripleShotActive = false;
     private bool _speedBoostActive = false;
+    private bool _shieldActive = false;
 
     void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
 
-        if(_spawnManager == null)
+        if (_spawnManager == null)
         {
             Debug.LogError("The SpawnManager is NULL.");
         }
@@ -53,14 +56,14 @@ public class Player : MonoBehaviour
 
         transform.Translate(direction * _speed * Time.deltaTime);
 
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.5f, 2.0f),0);
-        
-        if(transform.position.x >= 11.3f)
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.5f, 2.0f), 0);
+
+        if (transform.position.x >= 11.3f)
         {
-            transform.position = new Vector3(-11.3f, transform.position.y ,0);
-        }else if (transform.position.x <= -11.3f)
+            transform.position = new Vector3(-11.3f, transform.position.y, 0);
+        } else if (transform.position.x <= -11.3f)
         {
-            transform.position = new Vector3(11.3f,transform.position.y ,0);
+            transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
     }
 
@@ -68,10 +71,10 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + _fireRate;
         if (_tripleShotActive)
-        { 
+        {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
         }
-        else 
+        else
         {
             Instantiate(_laserPrefab, transform.position + _offset, Quaternion.identity);
         }
@@ -79,12 +82,23 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        _lives--;
-        if(_lives < 1)
+    
+        if (_shieldActive)
         {
-            _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
+            _shieldActive = false;
+            _shieldsVisualizer.SetActive(false);
+            StopCoroutine("ShieldsRoutine");
         }
+        else
+        {
+            _lives--;
+            if (_lives < 1)
+            {
+                _spawnManager.OnPlayerDeath();
+                Destroy(this.gameObject);
+            }
+        }
+
     }
 
     public void ActiveTripleShot()
@@ -93,12 +107,19 @@ public class Player : MonoBehaviour
         StartCoroutine(TripleShotRoutine());
     }
 
-    public void SpeedBoostActive() 
+    public void ActiveSpeedBoost()
     {
         _speedBoostActive = true;
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostRountine());
-        
+    }
+
+    public void ActivateShield()
+    {
+        Debug.Log("Shield Active");
+        _shieldActive = true;
+        _shieldsVisualizer.SetActive(true);
+        StartCoroutine(ShieldsRoutine());
     }
 
     IEnumerator TripleShotRoutine()
@@ -112,5 +133,12 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         _speedBoostActive = false;
         _speed /= _speedMultiplier;
+    }
+
+    IEnumerator ShieldsRoutine()
+    {
+        yield return new WaitForSeconds(10.0f);
+        _shieldActive = false;
+        _shieldsVisualizer.SetActive(false);
     }
 }

@@ -37,13 +37,13 @@ public class PowerUp : MonoBehaviour
                         player.ActiveTripleShot();
                         break;
                     case 1:
-                        player.SpeedBoostActive();
+                        player.ActiveSpeedBoost();
                         break;
                     case 2:
-                        Debug.Log("Shield active");
+                        player.ActivateShield();
                         break;
                     default:
-                        Debug.LogError("power up ID not found");
+                        Debug.LogWarning("power up ID not found");
                         break;
                 }
                 
