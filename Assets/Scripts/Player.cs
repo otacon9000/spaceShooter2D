@@ -15,6 +15,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _shieldsVisualizer;
     [SerializeField]
+    private GameObject _rightEngineVisualizer;
+    [SerializeField]
+    private GameObject _leftEngineVisualizer;
+    [SerializeField]
+    private GameObject _explosionPrefab;
+    [SerializeField]
     private Vector3 _offset = Vector3.up;
     [SerializeField]
     private float _fireRate = 0.5f;
@@ -102,9 +108,15 @@ public class Player : MonoBehaviour
         else
         {
             _lives--;
+
+            if (_lives == 2) _rightEngineVisualizer.SetActive(true);
+            if (_lives == 1) _leftEngineVisualizer.SetActive(true);
+
+
             _uiManager.UpdateLive(_lives);
             if (_lives < 1)
             {
+                Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
                 _spawnManager.OnPlayerDeath();
                 Destroy(this.gameObject);
             }

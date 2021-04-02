@@ -47,6 +47,12 @@ TagManager:
   - name: Background
     uniqueID: 357609475
     locked: 0
+  - name: Player
+    uniqueID: 255458571
+    locked: 0
   - name: Foreground
     uniqueID: 2554942985
+    locked: 0
+  - name: Shileds
+    uniqueID: 3069697089
     locked: 0
