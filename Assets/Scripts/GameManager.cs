@@ -15,9 +15,17 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver)
         {
             SceneManager.LoadScene(1); //current game scene 
-            Debug.Log("RRRRR");
         }
-        
+        if (Input.GetKeyDown(KeyCode.Escape) && _isGameOver)
+        {
+            Application.Quit();
+        }
+        if (Input.GetKeyDown(KeyCode.M) && _isGameOver)
+        {
+            SceneManager.LoadScene(0); // MainMenu scene 
+        }
+
+
     }
 
 
