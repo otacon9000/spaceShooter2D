@@ -10,6 +10,10 @@ public class PowerUp : MonoBehaviour
     [SerializeField]
     private int _powerUpID = 0;
 
+    [SerializeField]
+    private AudioClip _powerUpClip;
+
+
     void Update()
     {
         Move();   
@@ -29,7 +33,9 @@ public class PowerUp : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Player player = other.transform.GetComponent<Player>();
-            if(player != null)
+
+            AudioSource.PlayClipAtPoint(_powerUpClip, transform.position);
+            if (player != null)
             {
                 switch(_powerUpID)
                 {
@@ -46,8 +52,11 @@ public class PowerUp : MonoBehaviour
                         Debug.LogWarning("power up ID not found");
                         break;
                 }
+
+                
                 
             }
+            
             Destroy(this.gameObject);
         }
         
