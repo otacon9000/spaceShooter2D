@@ -8,6 +8,16 @@ public class Enemy : MonoBehaviour
     private float _speed = 4.0f;
     [SerializeField]
     private int _points = 10;
+    [SerializeField]
+    private AudioClip _explosionClip;
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private GameObject _laserPrefab;
+    [SerializeField]
+    private float _fireRate = 3.0f;
+    private float _canFire = 1f;
+
     private Animator _anim;
 
     private Player _player;
@@ -15,20 +25,38 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _anim = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+
+
         if (_player == null)
         {
             Debug.LogError("The player is NULL.");
         }
-        _anim = GetComponent<Animator>();
+        
         if (_anim == null)
         {
             Debug.LogError("The Animator is NULL.");
+        }
+
+        if (_audioSource == null)
+        {
+            Debug.LogError("The AudioSource is NULL.");
+        }
+        else
+        {
+            _audioSource.clip = _explosionClip;
         }
     }
 
     void Update()
     {
         Move();
+
+        if(Time.time > _canFire)
+        {
+            FireLaser();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -43,6 +71,8 @@ public class Enemy : MonoBehaviour
             }
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
+            _audioSource.Play();
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.8f);
         }
         if(other.CompareTag("Laser"))
@@ -55,6 +85,8 @@ public class Enemy : MonoBehaviour
             }
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
+            _audioSource.Play();
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.8f);
         }
     }
@@ -68,5 +100,19 @@ public class Enemy : MonoBehaviour
             float randomX = Random.Range(-8, 8);
             transform.position = new Vector3(randomX, 7f, 0);
         }
+    }
+
+    void FireLaser()
+    {
+        _fireRate = Random.Range(3f, 7f);
+        _canFire = Time.time + _fireRate;
+        GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+        foreach (Laser element in lasers)
+        {
+            element.AssingEnemyLaser();
+        }
+        
     }
 }
