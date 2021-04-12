@@ -207,6 +207,12 @@ public class Player : MonoBehaviour
         //StartCoroutine(ShieldsRoutine());
     }
 
+    public void AddAmmo()
+    {
+        _ammoCounter = 15;
+        _uiManager.UpdateAmmoCounter(_ammoCounter);
+    }
+
    
     public void AddScore(int points)
     {

@@ -48,6 +48,9 @@ public class PowerUp : MonoBehaviour
                     case 2:
                         player.ActivateShield();
                         break;
+                    case 3:
+                        player.AddAmmo();
+                        break;
                     default:
                         Debug.LogWarning("power up ID not found");
                         break;
