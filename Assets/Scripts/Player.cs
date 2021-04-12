@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private int _ammoCounter = 15;
     [Header("Effects")]
     [SerializeField]
     private GameObject _laserPrefab;
@@ -45,6 +47,8 @@ public class Player : MonoBehaviour
     [Header("Audio")]
     [SerializeField]
     private AudioClip _laserClip;
+    [SerializeField]
+    private AudioClip _noBulletClip;
     private AudioSource _audioSource;
 
     void Start()
@@ -112,17 +116,30 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
-        _canFire = Time.time + _fireRate;
-        if (_tripleShotActive)
+        if (_ammoCounter > 1)
         {
-            Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
-            
+            _ammoCounter--;
+            _uiManager.UpdateAmmoCounter(_ammoCounter);
+            _audioSource.clip = _laserClip;
+            _canFire = Time.time + _fireRate;
+            if (_tripleShotActive)
+            {
+                Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+
+            }
+            else
+            {
+                Instantiate(_laserPrefab, transform.position + _offset, Quaternion.identity);
+            }
+            _audioSource.PlayOneShot(_laserClip);
+
         }
         else
         {
-            Instantiate(_laserPrefab, transform.position + _offset, Quaternion.identity);
+            _uiManager.UpdateAmmoCounter(0);
+            Debug.Log("NO AMMO");
+            _audioSource.PlayOneShot(_noBulletClip);
         }
-        _audioSource.Play();
     }
 
     public void Damage()
