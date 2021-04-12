@@ -213,6 +213,17 @@ public class Player : MonoBehaviour
         _uiManager.UpdateAmmoCounter(_ammoCounter);
     }
 
+    public void RestoreHealth()
+    {
+        if(_lives < 3)
+        {
+            _lives++;
+            _uiManager.UpdateLive(_lives);
+            if (_lives == 3) _rightEngineVisualizer.SetActive(false);
+            if (_lives == 2) _leftEngineVisualizer.SetActive(false);
+        }
+    }
+
    
     public void AddScore(int points)
     {
