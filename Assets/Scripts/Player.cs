@@ -4,10 +4,19 @@ using UnityEngine;
 
 
 public class Player : MonoBehaviour
-{
+{   
+    [Header("Player Value")]
     [SerializeField]
     private float _speed = 5.0f;
+    [SerializeField]
+    private float _thrusterSpeed = 10.0f;
     private float _speedMultiplier = 2f;
+    [SerializeField]
+    private float _fireRate = 0.5f;
+    private float _canFire = -1f;
+    [SerializeField]
+    private int _lives = 3;
+    [Header("Prefab ")]
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -20,16 +29,11 @@ public class Player : MonoBehaviour
     private GameObject _leftEngineVisualizer;
     [SerializeField]
     private GameObject _explosionPrefab;
-    [SerializeField]
+
     private Vector3 _offset = Vector3.up;
-    [SerializeField]
-    private float _fireRate = 0.5f;
-    private float _canFire = -1f;
-    [SerializeField]
-    private int _lives = 3;
+
     private SpawnManager _spawnManager;
 
-    [SerializeField]
     private int _score = 0;
 
     private bool _tripleShotActive = false;
@@ -37,7 +41,7 @@ public class Player : MonoBehaviour
     private bool _shieldActive = false;
 
     private UIManager _uiManager;
-
+    [Header("Audio")]
     [SerializeField]
     private AudioClip _laserClip;
     private AudioSource _audioSource;
@@ -84,7 +88,16 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
 
-        transform.Translate(direction * _speed * Time.deltaTime);
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            transform.Translate(direction * _thrusterSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(direction * _speed * Time.deltaTime);
+        }
+
+        //transform.Translate(direction * _speed * Time.deltaTime);
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.5f, 2.0f), 0);
 
@@ -95,6 +108,11 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
+
+
+
+
+
     }
 
     void FireLaser()
