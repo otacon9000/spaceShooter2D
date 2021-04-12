@@ -453,6 +453,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _thrusterSpeed: 20
+  _fireRate: 0.15
+  _lives: 3
   _laserPrefab: {fileID: 6670858977806780305, guid: fcc742b619a3826419454a820b17b04e,
     type: 3}
   _tripleShotPrefab: {fileID: 1725804027508821909, guid: be5433683bff20841bd51b9e11896835,
@@ -462,10 +465,7 @@ MonoBehaviour:
   _leftEngineVisualizer: {fileID: 960394969}
   _explosionPrefab: {fileID: 4488225937660765802, guid: 2dd32d81b0e41554d951fa8e8df2ee6c,
     type: 3}
-  _offset: {x: 0, y: 1.05, z: 0}
-  _fireRate: 0.15
-  _lives: 3
-  _score: 0
+  _shieldLives: 3
   _laserClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
 --- !u!212 &464158137
 SpriteRenderer:

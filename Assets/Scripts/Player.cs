@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     [SerializeField]
     private int _lives = 3;
-    [Header("Prefab ")]
+    [Header("Effects")]
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     private bool _tripleShotActive = false;
     private bool _speedBoostActive = false;
     private bool _shieldActive = false;
+    private int _shieldLives = 2;
 
     private UIManager _uiManager;
     [Header("Audio")]
@@ -97,8 +98,6 @@ public class Player : MonoBehaviour
             transform.Translate(direction * _speed * Time.deltaTime);
         }
 
-        //transform.Translate(direction * _speed * Time.deltaTime);
-
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.5f, 2.0f), 0);
 
         if (transform.position.x >= 11.3f)
@@ -108,10 +107,6 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
-
-
-
-
 
     }
 
@@ -135,9 +130,24 @@ public class Player : MonoBehaviour
     
         if (_shieldActive)
         {
-            _shieldActive = false;
-            _shieldsVisualizer.SetActive(false);
-            StopCoroutine("ShieldsRoutine");
+            if (_shieldLives <1)
+            {
+                _shieldActive = false;
+                _shieldsVisualizer.SetActive(false);
+                //StopCoroutine("ShieldsRoutine");
+            }
+            else
+            {
+                _shieldLives--;
+                if (_shieldLives == 1)
+                {
+                    _shieldsVisualizer.GetComponent<SpriteRenderer>().color = Color.green;
+                }
+                if (_shieldLives == 0)
+                {
+                    _shieldsVisualizer.GetComponent<SpriteRenderer>().color = Color.red;
+                }
+            }
         }
         else
         {
@@ -173,9 +183,11 @@ public class Player : MonoBehaviour
 
     public void ActivateShield()
     {
+        _shieldLives = 2;
         _shieldActive = true;
+        _shieldsVisualizer.GetComponent<SpriteRenderer>().color = Color.white;
         _shieldsVisualizer.SetActive(true);
-        StartCoroutine(ShieldsRoutine());
+        //StartCoroutine(ShieldsRoutine());
     }
 
    
