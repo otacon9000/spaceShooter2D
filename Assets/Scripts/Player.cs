@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
 
     private SpawnManager _spawnManager;
 
+    private CameraShake _cameraShake;
+
     private int _score = 0;
 
     private bool _tripleShotActive = false;
@@ -59,6 +61,7 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
+        _cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
 
         if (_spawnManager == null)
         {
@@ -75,6 +78,10 @@ public class Player : MonoBehaviour
         else
         {
             _audioSource.clip = _laserClip;
+        }
+        if (_cameraShake == null)
+        {
+            Debug.LogError("The CaneraShake is NULL.");
         }
 
     }
@@ -154,7 +161,8 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-    
+        _cameraShake.ActivateCameraShake();
+
         if (_shieldActive)
         {
             if (_shieldLives <1)
@@ -182,8 +190,7 @@ public class Player : MonoBehaviour
 
             if (_lives == 2) _rightEngineVisualizer.SetActive(true);
             if (_lives == 1) _leftEngineVisualizer.SetActive(true);
-
-
+            
             _uiManager.UpdateLive(_lives);
             if (_lives < 1)
             {

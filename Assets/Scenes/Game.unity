@@ -922,6 +922,7 @@ GameObject:
   - component: {fileID: 693090871}
   - component: {fileID: 693090870}
   - component: {fileID: 693090873}
+  - component: {fileID: 693090874}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -987,13 +988,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693090869}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.00052356074, z: 0, w: 0.9999999}
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0.06, z: 0}
 --- !u!114 &693090873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1054,6 +1055,21 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &693090874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693090869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efda26e8b2672a04ba0d9007f31c6d28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shakeIntensity: 0.3
+  _shakeDuration: 0.5
+  _dampingSpeed: 1
 --- !u!1 &699176339
 GameObject:
   m_ObjectHideFlags: 0
