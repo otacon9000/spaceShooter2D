@@ -54,6 +54,9 @@ public class PowerUp : MonoBehaviour
                     case 4:
                         player.RestoreHealth();
                         break;
+                    case 5:
+                        player.ActivateSpreadShot();
+                        break;
                     default:
                         Debug.LogWarning("power up ID not found");
                         break;

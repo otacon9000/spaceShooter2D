@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _spreadShootPrefab;
+    [SerializeField]
     private GameObject _shieldsVisualizer;
     [SerializeField]
     private GameObject _rightEngineVisualizer;
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour
     private int _score = 0;
 
     private bool _tripleShotActive = false;
+    private bool _spreadShootActive = false;
     private bool _speedBoostActive = false;
     private bool _shieldActive = false;
     private int _shieldLives = 2;
@@ -122,9 +125,16 @@ public class Player : MonoBehaviour
             _uiManager.UpdateAmmoCounter(_ammoCounter);
             _audioSource.clip = _laserClip;
             _canFire = Time.time + _fireRate;
-            if (_tripleShotActive)
+            if (_tripleShotActive || _spreadShootActive)
             {
-                Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                if (_tripleShotActive)
+                {
+                    Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(_spreadShootPrefab, transform.position, Quaternion.identity);
+                }
 
             }
             else
@@ -224,6 +234,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ActivateSpreadShot()
+    {
+        _spreadShootActive = true;
+        StartCoroutine(SpreadShotRoutine());
+    }
+
    
     public void AddScore(int points)
     {
@@ -242,6 +258,12 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         _speedBoostActive = false;
         _speed /= _speedMultiplier;
+    }
+
+    IEnumerator SpreadShotRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _spreadShootActive = false;
     }
 
     IEnumerator ShieldsRoutine()
