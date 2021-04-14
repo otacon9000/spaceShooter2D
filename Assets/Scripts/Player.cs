@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [Header("Player Value")]
     [SerializeField]
     private float _speed = 5.0f;
+    private float _currentSpeed = 5.0f;
     [SerializeField]
     private float _thrusterSpeed = 10.0f;
     private float _currentThruster = 20.0f;
@@ -19,9 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
-    [SerializeField]
     private int _lives = 3;
-    [SerializeField]
     private int _ammoCounter = 15;
     [Header("Effects")]
     [SerializeField]
@@ -52,7 +51,6 @@ public class Player : MonoBehaviour
     private bool _speedBoostActive = false;
     private bool _shieldActive = false;
     private int _shieldLives = 2;
-    [SerializeField]
     private bool _fillThruster = false;
 
     private UIManager _uiManager;
@@ -93,6 +91,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        _currentSpeed = _speed;
         _currentThruster = _thrusterMaxValue;
         _uiManager.SetMaxThrusterValue(_thrusterMaxValue);
         StartCoroutine(ThrusterRechargeRoutine());
@@ -118,14 +117,15 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && _currentThruster > 0 )
         {
             _fillThruster = false;
-            transform.Translate(direction * _thrusterSpeed * Time.deltaTime);
+            _currentSpeed = _thrusterSpeed;
+            transform.Translate(direction * _currentSpeed * Time.deltaTime);
             _currentThruster -= _thrusterConsume * Time.deltaTime;
             _uiManager.UpdateThrusterBar(_currentThruster);
         }
         else
         {
             _fillThruster = true; 
-            transform.Translate(direction * _speed * Time.deltaTime);
+            transform.Translate(direction * _currentSpeed * Time.deltaTime);
         }
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.5f, 2.0f), 0);
@@ -168,7 +168,6 @@ public class Player : MonoBehaviour
         else
         {
             _uiManager.UpdateAmmoCounter(0);
-            Debug.Log("NO AMMO");
             _audioSource.PlayOneShot(_noBulletClip);
         }
     }
@@ -224,7 +223,7 @@ public class Player : MonoBehaviour
     public void ActiveSpeedBoost()
     {
         _speedBoostActive = true;
-        _speed *= _speedMultiplier;
+        _currentSpeed *= _speedMultiplier;
         StartCoroutine(SpeedBoostRountine());
     }
 
@@ -276,7 +275,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _speedBoostActive = false;
-        _speed /= _speedMultiplier;
+        _currentSpeed /= _speedMultiplier;
     }
 
     IEnumerator SpreadShotRoutine()

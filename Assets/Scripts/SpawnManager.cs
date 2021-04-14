@@ -33,14 +33,12 @@ public class SpawnManager : MonoBehaviour
             newEnemy.transform.parent = _enemyContainer.transform;
             yield return _waitEnemy;
         }
-
     }
 
     IEnumerator PowerUpSpawnRoutine()
     {
         while(_stopSpawn == false)
         {
-
             yield return new WaitForSeconds(Random.Range(3, 8));
             float randomX = Random.Range(-8.0f, 8.0f);
             Vector3 spawnPosition = new Vector3(randomX, 7f, 0);
@@ -50,7 +48,6 @@ public class SpawnManager : MonoBehaviour
                 randomPowerUp = Random.Range(0, 6);
             }
             Instantiate(_PowerUpPrefab[randomPowerUp], spawnPosition, Quaternion.identity);
-            
         }
         
     }

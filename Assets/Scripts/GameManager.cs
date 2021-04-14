@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-
-
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver)
         {
             SceneManager.LoadScene(1); //current game scene 
@@ -24,10 +22,7 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(0); // MainMenu scene 
         }
-
-
     }
-
 
     public void GameOver()
     {

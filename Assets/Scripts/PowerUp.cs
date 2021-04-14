@@ -9,10 +9,8 @@ public class PowerUp : MonoBehaviour
     private float _speed = 3.0f;
     [SerializeField]
     private int _powerUpID = 0;
-
     [SerializeField]
     private AudioClip _powerUpClip;
-
 
     void Update()
     {
@@ -60,14 +58,9 @@ public class PowerUp : MonoBehaviour
                     default:
                         Debug.LogWarning("power up ID not found");
                         break;
-                }
-
-                
-                
-            }
-            
+                }           
+            }          
             Destroy(this.gameObject);
         }
-        
     }
 }
