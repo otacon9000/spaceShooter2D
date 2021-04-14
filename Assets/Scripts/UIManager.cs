@@ -12,12 +12,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image _livesImage;
     [SerializeField]
+    private Slider _thrusterSlider;
+    [SerializeField]
     private Text _gameOverText;
     [SerializeField]
     private Text _restartText;
     [SerializeField]
     private Sprite[] _liveSprite;
-
+  
     private GameManager _gameManager;
 
   
@@ -62,6 +64,17 @@ public class UIManager : MonoBehaviour
         StartCoroutine(GameOverFlickerRoutine());
     }
 
+    public void SetMaxThrusterValue(float thrusterValue)
+    {
+        _thrusterSlider.maxValue = thrusterValue;
+        _thrusterSlider.value = thrusterValue;
+    }
+
+    public void UpdateThrusterBar(float thrusterValue)
+    {
+        _thrusterSlider.value = thrusterValue;
+    }
+
     IEnumerator GameOverFlickerRoutine()
     {
         while(true)
@@ -74,6 +87,4 @@ public class UIManager : MonoBehaviour
         }
 
     }
-
-    
 }

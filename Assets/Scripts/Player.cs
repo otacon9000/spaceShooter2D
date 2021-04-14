@@ -10,6 +10,11 @@ public class Player : MonoBehaviour
     private float _speed = 5.0f;
     [SerializeField]
     private float _thrusterSpeed = 10.0f;
+    private float _currentThruster = 20.0f;
+    [SerializeField]
+    private float _thrusterMaxValue = 10.0f;
+    [SerializeField]
+    private float _thrusterConsume = 1.5f;
     private float _speedMultiplier = 2f;
     [SerializeField]
     private float _fireRate = 0.5f;
@@ -47,6 +52,8 @@ public class Player : MonoBehaviour
     private bool _speedBoostActive = false;
     private bool _shieldActive = false;
     private int _shieldLives = 2;
+    [SerializeField]
+    private bool _fillThruster = false;
 
     private UIManager _uiManager;
     [Header("Audio")]
@@ -56,7 +63,7 @@ public class Player : MonoBehaviour
     private AudioClip _noBulletClip;
     private AudioSource _audioSource;
 
-    void Start()
+    void Awake()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -67,7 +74,7 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The SpawnManager is NULL.");
         }
-        if(_uiManager == null)
+        if (_uiManager == null)
         {
             Debug.LogError("The UI Manager is NULL.");
         }
@@ -83,7 +90,12 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("The CaneraShake is NULL.");
         }
-
+    }
+    void Start()
+    {
+        _currentThruster = _thrusterMaxValue;
+        _uiManager.SetMaxThrusterValue(_thrusterMaxValue);
+        StartCoroutine(ThrusterRechargeRoutine());
     }
 
     void Update()
@@ -103,12 +115,16 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && _currentThruster > 0 )
         {
+            _fillThruster = false;
             transform.Translate(direction * _thrusterSpeed * Time.deltaTime);
+            _currentThruster -= _thrusterConsume * Time.deltaTime;
+            _uiManager.UpdateThrusterBar(_currentThruster);
         }
         else
         {
+            _fillThruster = true; 
             transform.Translate(direction * _speed * Time.deltaTime);
         }
 
@@ -142,14 +158,12 @@ public class Player : MonoBehaviour
                 {
                     Instantiate(_spreadShootPrefab, transform.position, Quaternion.identity);
                 }
-
             }
             else
             {
                 Instantiate(_laserPrefab, transform.position + _offset, Quaternion.identity);
             }
             _audioSource.PlayOneShot(_laserClip);
-
         }
         else
         {
@@ -169,7 +183,6 @@ public class Player : MonoBehaviour
             {
                 _shieldActive = false;
                 _shieldsVisualizer.SetActive(false);
-                //StopCoroutine("ShieldsRoutine");
             }
             else
             {
@@ -221,7 +234,6 @@ public class Player : MonoBehaviour
         _shieldActive = true;
         _shieldsVisualizer.GetComponent<SpriteRenderer>().color = Color.white;
         _shieldsVisualizer.SetActive(true);
-        //StartCoroutine(ShieldsRoutine());
     }
 
     public void AddAmmo()
@@ -273,10 +285,18 @@ public class Player : MonoBehaviour
         _spreadShootActive = false;
     }
 
-    IEnumerator ShieldsRoutine()
+    IEnumerator ThrusterRechargeRoutine()
     {
-        yield return new WaitForSeconds(10.0f);
-        _shieldActive = false;
-        _shieldsVisualizer.SetActive(false);
+        while(true)
+        {
+            if(_currentThruster < _thrusterMaxValue && _fillThruster == true)
+            {
+                _currentThruster += 0.01f;
+                _uiManager.UpdateThrusterBar(_currentThruster);
+            }
+            yield return null;
+        }
     }
+        
+    
 }
