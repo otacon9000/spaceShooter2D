@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _enemyPrefab;
+    private GameObject[] _enemyPrefab;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
@@ -25,16 +25,34 @@ public class SpawnManager : MonoBehaviour
     IEnumerator EnemySpawnRoutine()
     {
         yield return new WaitForSeconds(3.0f);
+        
         while(_stopSpawn == false)
         {
             float randomX = Random.Range(-8.0f, 8.0f);
             Vector3 spawnPosition = new Vector3(randomX, 7f, 0);
-            GameObject newEnemy = Instantiate(_enemyPrefab, spawnPosition, Quaternion.identity);
-            newEnemy.transform.parent = _enemyContainer.transform;
-            yield return _waitEnemy;
+            Vector3 spawnPos2 = new Vector3(-13f, 6f, 0f);
+            switch (Random.Range(0, _enemyPrefab.Length)) 
+            {
+                case 0:
+                   Instantiate(_enemyPrefab[0], spawnPosition, Quaternion.identity, _enemyContainer.transform);
+                    yield return _waitEnemy;
+                    break;             
+                case 1:
+                   Instantiate(_enemyPrefab[1], spawnPosition, Quaternion.identity, _enemyContainer.transform);
+                    yield return _waitEnemy;
+                    break;
+                case 2:
+                    Debug.Log(2);
+                    Instantiate(_enemyPrefab[2], spawnPos2 , Quaternion.identity, _enemyContainer.transform);
+                    yield return _waitEnemy;
+                    break;
+            }
+                
+         
         }
     }
 
+    
     IEnumerator PowerUpSpawnRoutine()
     {
         while(_stopSpawn == false)

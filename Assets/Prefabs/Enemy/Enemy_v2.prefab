@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6763708630556775302}
   - component: {fileID: 8899196350627706511}
   - component: {fileID: 2981832975639104779}
-  - component: {fileID: 6659112499468210394}
   - component: {fileID: 7062732842316714576}
   m_Layer: 0
   m_Name: Enemy_v2
@@ -145,31 +144,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e52028d8be6db4fa5033bd8f393945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyType: 0
+  _enemylife: 1
   _speed: 4
   _points: 10
   _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _laserPrefab: {fileID: 2591709517426339492, guid: 60b2699366ff1c245bb5efac579a4192,
     type: 3}
+  _explosionPrefab: {fileID: 2888991776269412553, guid: 66efc97ca9e401845bdacbaa25f38f65,
+    type: 3}
   _fireRate: 3
---- !u!95 &6659112499468210394
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8013063992403166306}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4cf8552ce50271f4099762956898a0db, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!82 &7062732842316714576
 AudioSource:
   m_ObjectHideFlags: 0

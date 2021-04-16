@@ -21,17 +21,19 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
+    private GameObject _explosionPrefab;
+    [SerializeField]
     private float _fireRate = 3.0f;
     private float _canFire = 0.5f;
 
-    private Animator _anim;
+    //private Animator _anim;
 
     private Player _player;
 
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-        _anim = GetComponent<Animator>();
+        //_anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
 
 
@@ -40,10 +42,10 @@ public class Enemy : MonoBehaviour
             Debug.LogError("The player is NULL.");
         }
         
-        if (_anim == null)
-        {
-            Debug.LogError("The Animator is NULL.");
-        }
+        //if (_anim == null)
+        //{
+        //    Debug.LogError("The Animator is NULL.");
+        //}
 
         if (_audioSource == null)
         {
@@ -66,7 +68,7 @@ public class Enemy : MonoBehaviour
             FireLaser();
         }
 
-        if (transform.position.x > 13)
+        if (transform.position.x > 13.5f)
             Destroy(this.gameObject);
     }
 
@@ -80,11 +82,12 @@ public class Enemy : MonoBehaviour
             {
                 _player.Damage();
             }
-            _anim.SetTrigger("OnEnemyDeath");
+            //_anim.SetTrigger("OnEnemyDeath");
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             _speed = 0;
             _audioSource.Play();
             Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 2.8f);
+            Destroy(this.gameObject,1f);
         }
         if(other.CompareTag("Laser"))
         {
@@ -94,11 +97,12 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(_points);
             }
-            _anim.SetTrigger("OnEnemyDeath");
+            //_anim.SetTrigger("OnEnemyDeath");
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             _speed = 0;
             _audioSource.Play();
             Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 2.8f);
+            Destroy(this.gameObject, 1f);
         }
     }
 
