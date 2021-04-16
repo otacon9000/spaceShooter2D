@@ -8,6 +8,7 @@ public class Laser : MonoBehaviour
     private float _speed = 8f;
     private bool _isEnemyLaser = false;
 
+
     void Update()
     {
       if(_isEnemyLaser)

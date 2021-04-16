@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    public enum typeOfEnemy { normalEnemy ,scoreEnemy,bossEnemy };
+    public enum typeOfEnemy { normal ,scoreEnemy,aggressive,boss };
     [SerializeField]
     private typeOfEnemy _enemyType;
     [SerializeField]
@@ -26,26 +26,20 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 3.0f;
     private float _canFire = 0.5f;
 
-    //private Animator _anim;
-
     private Player _player;
+    private Rigidbody2D _rb;
 
-    void Start()
+    private void Awake()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-        //_anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
+        _rb = GetComponent<Rigidbody2D>();
 
 
         if (_player == null)
         {
             Debug.LogError("The player is NULL.");
         }
-        
-        //if (_anim == null)
-        //{
-        //    Debug.LogError("The Animator is NULL.");
-        //}
 
         if (_audioSource == null)
         {
@@ -55,7 +49,16 @@ public class Enemy : MonoBehaviour
         {
             _audioSource.clip = _explosionClip;
         }
+
+        
+        if (_rb == null)
+        {
+            Debug.Log("Rigidbody2D is Null.");
+        }
+        //Physics2D.queriesStartInColliders = false;
     }
+
+   
 
     void Update()
     {
@@ -63,7 +66,7 @@ public class Enemy : MonoBehaviour
 
         
 
-        if(Time.time > _canFire)
+        if(Time.time > _canFire && _enemyType != typeOfEnemy.aggressive)
         {
             FireLaser();
         }
@@ -82,7 +85,6 @@ public class Enemy : MonoBehaviour
             {
                 _player.Damage();
             }
-            //_anim.SetTrigger("OnEnemyDeath");
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             _speed = 0;
             _audioSource.Play();
@@ -97,7 +99,6 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(_points);
             }
-            //_anim.SetTrigger("OnEnemyDeath");
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             _speed = 0;
             _audioSource.Play();
@@ -108,9 +109,11 @@ public class Enemy : MonoBehaviour
 
     void Move()
     {
+        RaycastHit2D hit = Physics2D.Raycast((transform.position + Vector3.down), Vector2.down, 10.0f);
+        
         switch (_enemyType) 
         {
-            case typeOfEnemy.normalEnemy:
+            case typeOfEnemy.normal:
                 transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
                 if (transform.position.y < -6f)
@@ -122,6 +125,21 @@ public class Enemy : MonoBehaviour
             case typeOfEnemy.scoreEnemy:
                 transform.Translate(Vector3.right * _speed * Time.deltaTime);
                 break;
+            case typeOfEnemy.aggressive:
+                transform.Translate(Vector3.down * _speed * Time.deltaTime);
+               
+                if (transform.position.y < -6f)
+                {
+                    float randomX = Random.Range(-8, 8);
+                    transform.position = new Vector3(randomX, 7f, 0);
+                }
+                if (hit.collider != null && hit.collider.CompareTag("Player"))
+                {
+                    transform.Translate(Vector3.down * _speed * 3 * Time.deltaTime);
+                }
+
+                break;
+
             default:
                 break;
 
