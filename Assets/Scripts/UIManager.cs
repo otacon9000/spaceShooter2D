@@ -51,9 +51,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateAmmoCounter(int ammoCounter)
+    public void UpdateAmmoCounter(int ammoCounter, int maxAmmo)
     {
-        _ammoText.text = "Ammo: " + ammoCounter.ToString();
+        _ammoText.text =  ammoCounter.ToString() + " / " + maxAmmo.ToString() ;
     }
 
     public void GameOverSequence()

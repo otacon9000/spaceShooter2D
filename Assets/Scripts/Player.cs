@@ -21,7 +21,10 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
     private int _lives = 3;
-    private int _ammoCounter = 15;
+    private int _currentAmmo = 15;
+    [SerializeField]
+    private int _maxAmmo = 15;
+
     [Header("Effects")]
     [SerializeField]
     private GameObject _laserPrefab;
@@ -92,6 +95,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         _currentSpeed = _speed;
+        _currentAmmo = _maxAmmo;
         _currentThruster = _thrusterMaxValue;
         _uiManager.SetMaxThrusterValue(_thrusterMaxValue);
         StartCoroutine(ThrusterRechargeRoutine());
@@ -142,10 +146,10 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
-        if (_ammoCounter > 1)
+        if (_currentAmmo > 1)
         {
-            _ammoCounter--;
-            _uiManager.UpdateAmmoCounter(_ammoCounter);
+            _currentAmmo--;
+            _uiManager.UpdateAmmoCounter(_currentAmmo, _maxAmmo);
             _audioSource.clip = _laserClip;
             _canFire = Time.time + _fireRate;
             if (_tripleShotActive || _spreadShootActive)
@@ -167,7 +171,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            _uiManager.UpdateAmmoCounter(0);
+            _uiManager.UpdateAmmoCounter(0, _maxAmmo);
             _audioSource.PlayOneShot(_noBulletClip);
         }
     }
@@ -235,10 +239,15 @@ public class Player : MonoBehaviour
         _shieldsVisualizer.SetActive(true);
     }
 
+    public int GetMaxAmmo()
+    {
+        return _maxAmmo;
+    }
+
     public void AddAmmo()
     {
-        _ammoCounter = 15;
-        _uiManager.UpdateAmmoCounter(_ammoCounter);
+        _currentAmmo = _maxAmmo;
+        _uiManager.UpdateAmmoCounter(_currentAmmo, _maxAmmo);
     }
 
     public void RestoreHealth()
