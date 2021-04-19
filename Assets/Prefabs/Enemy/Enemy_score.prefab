@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6537494903644586025}
   - component: {fileID: 1286797667043614578}
   m_Layer: 0
-  m_Name: Enemy_v3
+  m_Name: Enemy_score
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,15 +145,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 2
-  _enemylife: 1
+  _enemyLives: 9
   _speed: 1
   _points: 50
-  _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _laserPrefab: {fileID: 7743141023146345281, guid: f0760760751291d4dbf900f0a5960a31,
     type: 3}
+  _fireRate: 3
   _explosionPrefab: {fileID: 2888991776269412553, guid: 66efc97ca9e401845bdacbaa25f38f65,
     type: 3}
-  _fireRate: 3
+  _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _shildIsActive: 0
   _shields: {fileID: 0}
 --- !u!82 &1286797667043614578

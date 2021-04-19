@@ -105,16 +105,23 @@ public class Enemy : MonoBehaviour
             else
             {
                 Destroy(other.gameObject);
-
-                if (_player != null)
+                if (_enemyLives < 1)
                 {
-                    _player.AddScore(_points);
+
+                    if (_player != null)
+                    {
+                        _player.AddScore(_points);
+                    }
+                    Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+                    _speed = 0;
+                    _audioSource.Play();
+                    Destroy(GetComponent<Collider2D>());
+                    Destroy(this.gameObject, 1f);
                 }
-                Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
-                _speed = 0;
-                _audioSource.Play();
-                Destroy(GetComponent<Collider2D>());
-                Destroy(this.gameObject, 1f);
+                else 
+                {
+                    _enemyLives--;
+                }
             }
         }
     
