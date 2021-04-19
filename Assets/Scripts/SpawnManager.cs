@@ -47,7 +47,6 @@ public class SpawnManager : MonoBehaviour
                     yield return _waitEnemy;
                     break;
                 case 3:
-                    Debug.Log(2);
                     Instantiate(_enemyPrefab[3], spawnPosition, Quaternion.identity, _enemyContainer.transform);
                     yield return _waitEnemy;
                     break;
