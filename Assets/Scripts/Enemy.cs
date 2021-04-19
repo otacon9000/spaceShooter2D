@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
         if (_enemyType == typeOfEnemy.shields)   
         {
             _shildIsActive = true;
-            Debug.Log(_shildIsActive);
+
 
             _shields.gameObject.SetActive(true);
         }
@@ -130,7 +130,6 @@ public class Enemy : MonoBehaviour
     void CalculateMove()
     {
         
-        //RaycastHit2D hit = Physics2D.CircleCast(transform.position, 5, Vector2.down);
         Collider2D hit = Physics2D.OverlapCircle(transform.position, 3f);
 
         switch (_enemyType) 
