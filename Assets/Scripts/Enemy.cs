@@ -129,7 +129,9 @@ public class Enemy : MonoBehaviour
 
     void CalculateMove()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 5, Vector2.down);
+        
+        //RaycastHit2D hit = Physics2D.CircleCast(transform.position, 5, Vector2.down);
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, 3f);
 
         switch (_enemyType) 
         {
@@ -165,11 +167,14 @@ public class Enemy : MonoBehaviour
                     float randomX = Random.Range(-8, 8);
                     transform.position = new Vector3(randomX, 7f, 0);
                 }
-                if (hit.collider != null && (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Shields")))
+                if (hit != null && (hit.CompareTag("Player") || hit.CompareTag("Shields")))
                 {
-                    Vector3 playerPosition = hit.collider.transform.position;
-                    transform.position = Vector3.MoveTowards(transform.position, playerPosition, _speed * _speedMultiplier * Time.deltaTime);
+                    Vector3 playerPosition = hit.transform.position;
+                    transform.position = Vector3.Lerp(transform.position, playerPosition, _speed  * Time.deltaTime);
                 }
+                break;
+            case typeOfEnemy.boss:
+                //do boss behavior
                 break;
 
             default:
