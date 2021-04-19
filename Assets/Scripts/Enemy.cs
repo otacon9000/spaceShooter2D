@@ -5,36 +5,39 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    public enum typeOfEnemy { normal ,scoreEnemy,aggressive,boss };
+    public enum typeOfEnemy { normal, shields, scoreEnemy, aggressive, boss };
     [SerializeField]
     private typeOfEnemy _enemyType;
     [SerializeField]
-    private int _enemylife = 1;
+    private int _enemyLives = 1;
     [SerializeField]
     private float _speed = 4.0f;
+    private int _speedMultiplier = 5;
     [SerializeField]
     private int _points = 10;
+    [SerializeField]
+    private GameObject _laserPrefab;
+    [SerializeField]
+    private float _fireRate = 3.0f;
+    private float _canFire = 0.5f;
+    [SerializeField]
+    private GameObject _explosionPrefab;
     [SerializeField]
     private AudioClip _explosionClip;
     private AudioSource _audioSource;
 
-    [SerializeField]
-    private GameObject _laserPrefab;
-    [SerializeField]
-    private GameObject _explosionPrefab;
-    [SerializeField]
-    private float _fireRate = 3.0f;
-    private float _canFire = 0.5f;
-
     private Player _player;
     private Rigidbody2D _rb;
+    [SerializeField]
+    private bool _shildIsActive = false;
+    [SerializeField]
+    private GameObject _shields;
 
     private void Awake()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        _player = GameObject.Find("Player").GetComponent<Player>();      
         _audioSource = GetComponent<AudioSource>();
         _rb = GetComponent<Rigidbody2D>();
-
 
         if (_player == null)
         {
@@ -50,28 +53,31 @@ public class Enemy : MonoBehaviour
             _audioSource.clip = _explosionClip;
         }
 
-        
         if (_rb == null)
         {
             Debug.Log("Rigidbody2D is Null.");
         }
-        //Physics2D.queriesStartInColliders = false;
+
+        if (_enemyType == typeOfEnemy.shields)   
+        {
+            _shildIsActive = true;
+            Debug.Log(_shildIsActive);
+
+            _shields.gameObject.SetActive(true);
+        }
     }
 
-   
+  
 
     void Update()
     {
-        Move();
-
-        
-
+        CalculateMove();
         if(Time.time > _canFire && _enemyType != typeOfEnemy.aggressive)
         {
             FireLaser();
         }
 
-        if (transform.position.x > 13.5f)
+        if (_enemyType == typeOfEnemy.scoreEnemy && transform.position.x > 13.5f)
             Destroy(this.gameObject);
     }
 
@@ -79,9 +85,7 @@ public class Enemy : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            
-            
-            if(_player != null)
+            if (_player != null)
             {
                 _player.Damage();
             }
@@ -91,26 +95,35 @@ public class Enemy : MonoBehaviour
             Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject,1f);
         }
-        if(other.CompareTag("Laser"))
+        if (other.CompareTag("Laser"))
         {
-            Destroy(other.gameObject);
-
-            if (_player != null)
+            if (_shildIsActive == true)
             {
-                _player.AddScore(_points);
+                Destroy(other.gameObject);
+                DeactivateShields();
             }
-            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
-            _speed = 0;
-            _audioSource.Play();
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 1f);
+            else
+            {
+                Destroy(other.gameObject);
+
+                if (_player != null)
+                {
+                    _player.AddScore(_points);
+                }
+                Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+                _speed = 0;
+                _audioSource.Play();
+                Destroy(GetComponent<Collider2D>());
+                Destroy(this.gameObject, 1f);
+            }
         }
+    
     }
 
-    void Move()
+    void CalculateMove()
     {
-        RaycastHit2D hit = Physics2D.Raycast((transform.position + Vector3.down), Vector2.down, 10.0f);
-        
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 5, Vector2.down);
+
         switch (_enemyType) 
         {
             case typeOfEnemy.normal:
@@ -122,9 +135,21 @@ public class Enemy : MonoBehaviour
                     transform.position = new Vector3(randomX, 7f, 0);
                 }
                 break;
+
+            case typeOfEnemy.shields:
+                transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+                if (transform.position.y < -6f)
+                {
+                    float randomX = Random.Range(-8, 8);
+                    transform.position = new Vector3(randomX, 7f, 0);
+                }
+                break;
+
             case typeOfEnemy.scoreEnemy:
                 transform.Translate(Vector3.right * _speed * Time.deltaTime);
                 break;
+
             case typeOfEnemy.aggressive:
                 transform.Translate(Vector3.down * _speed * Time.deltaTime);
                
@@ -133,11 +158,11 @@ public class Enemy : MonoBehaviour
                     float randomX = Random.Range(-8, 8);
                     transform.position = new Vector3(randomX, 7f, 0);
                 }
-                if (hit.collider != null && hit.collider.CompareTag("Player"))
+                if (hit.collider != null && (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Shields")))
                 {
-                    transform.Translate(Vector3.down * _speed * 3 * Time.deltaTime);
+                    Vector3 playerPosition = hit.collider.transform.position;
+                    transform.position = Vector3.MoveTowards(transform.position, playerPosition, _speed * _speedMultiplier * Time.deltaTime);
                 }
-
                 break;
 
             default:
@@ -159,5 +184,14 @@ public class Enemy : MonoBehaviour
             element.AssingEnemyLaser();
         }
         
+    }
+
+    void DeactivateShields()
+    {
+        if(_shildIsActive)
+        {
+            _shields.SetActive(false);
+            _shildIsActive = false;
+        }
     }
 }
