@@ -92,6 +92,7 @@ public class Player : MonoBehaviour
             Debug.LogError("The CaneraShake is NULL.");
         }
     }
+
     void Start()
     {
         _currentSpeed = _speed;
@@ -128,7 +129,8 @@ public class Player : MonoBehaviour
         }
         else
         {
-            _fillThruster = true; 
+            _fillThruster = true;
+            _currentSpeed = _speed;
             transform.Translate(direction * _currentSpeed * Time.deltaTime);
         }
 
