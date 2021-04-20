@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
     private bool _shieldActive = false;
     private int _shieldLives = 2;
     private bool _fillThruster = false;
+    private bool _attractiveRadius = false;
 
     private UIManager _uiManager;
     [Header("Audio")]
@@ -109,6 +110,27 @@ public class Player : MonoBehaviour
         {
             FireLaser();
         }
+
+        Collider2D [] hit = Physics2D.OverlapCircleAll(transform.position, 10f);
+
+        if(Input.GetKey(KeyCode.C))
+        {
+            _attractiveRadius = true;
+            foreach (Collider2D pickupCollider in hit)
+            {
+
+                if (pickupCollider.CompareTag("PowerUp"))
+                {
+                    StartCoroutine(AttractivePickupRoutine(pickupCollider));
+                }
+            }
+        }
+        else
+        {
+            _attractiveRadius = false;
+            //StopCoroutine("AttractivePickupRoutine");
+        }
+
     }
 
     void CalculateMove()
@@ -304,6 +326,17 @@ public class Player : MonoBehaviour
                 _currentThruster += 0.01f;
                 _uiManager.UpdateThrusterBar(_currentThruster);
             }
+            yield return null;
+        }
+    }
+
+    IEnumerator AttractivePickupRoutine(Collider2D hit)
+    {
+        
+        while(_attractiveRadius)
+        {
+
+            hit.transform.position = Vector3.Lerp(hit.transform.position, transform.position, Time.deltaTime/10);
             yield return null;
         }
     }
