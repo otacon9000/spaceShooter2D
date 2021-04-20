@@ -291,6 +291,11 @@ public class Player : MonoBehaviour
         StartCoroutine(SpreadShotRoutine());
     }
 
+    public void RemoveAmmo()
+    {
+        _currentAmmo = 0;
+    }
+
    
     public void AddScore(int points)
     {

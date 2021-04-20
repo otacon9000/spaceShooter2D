@@ -57,6 +57,9 @@ public class PowerUp : MonoBehaviour
                     case 5:
                         player.ActivateSpreadShot();
                         break;
+                    case 6:
+                        player.RemoveAmmo();
+                        break;
                     default:
                         Debug.LogWarning("power up ID not found");
                         break;

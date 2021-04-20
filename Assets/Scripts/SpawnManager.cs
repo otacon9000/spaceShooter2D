@@ -67,7 +67,7 @@ public class SpawnManager : MonoBehaviour
             int randomPowerUp = Random.Range(0, 6);
             if (randomPowerUp == 6)
             {
-                randomPowerUp = Random.Range(0, 6);
+                randomPowerUp = Random.Range(0, _PowerUpPrefab.Length);
             }
             Instantiate(_PowerUpPrefab[randomPowerUp], spawnPosition, Quaternion.identity);
         }
