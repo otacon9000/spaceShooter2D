@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7478680940522641063}
   - component: {fileID: 3218908123688339964}
   m_Layer: 0
-  m_Name: Enemy_v1
+  m_Name: Enemy_base
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,15 +145,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 0
-  _enemylife: 1
+  _enemyLives: 1
   _speed: 4
-  _points: 10
-  _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
-  _laserPrefab: {fileID: 7743141023146345281, guid: f0760760751291d4dbf900f0a5960a31,
-    type: 3}
-  _explosionPrefab: {fileID: 2888991776269412553, guid: 66efc97ca9e401845bdacbaa25f38f65,
+  _points: 5
+  _laserPrefab: {fileID: 2591709517426339492, guid: 60b2699366ff1c245bb5efac579a4192,
     type: 3}
   _fireRate: 3
+  _explosionPrefab: {fileID: 2888991776269412553, guid: 66efc97ca9e401845bdacbaa25f38f65,
+    type: 3}
+  _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _shildIsActive: 0
+  _shields: {fileID: 0}
 --- !u!82 &3218908123688339964
 AudioSource:
   m_ObjectHideFlags: 0

@@ -105,6 +105,7 @@ public class Enemy : MonoBehaviour
             else
             {
                 Destroy(other.gameObject);
+                _enemyLives--;
                 if (_enemyLives < 1)
                 {
 
@@ -118,10 +119,7 @@ public class Enemy : MonoBehaviour
                     Destroy(GetComponent<Collider2D>());
                     Destroy(this.gameObject, 1f);
                 }
-                else 
-                {
-                    _enemyLives--;
-                }
+            
             }
         }
     

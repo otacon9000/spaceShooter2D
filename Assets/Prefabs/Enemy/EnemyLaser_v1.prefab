@@ -43,6 +43,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyLaserBall
       objectReference: {fileID: 0}
+    - target: {fileID: 4181354019999178936, guid: c9ee50124295dd24db1516bf9ffefe36,
+        type: 3}
+      propertyPath: m_TagString
+      value: EnemyLaser
+      objectReference: {fileID: 0}
     - target: {fileID: 4181354019999178941, guid: c9ee50124295dd24db1516bf9ffefe36,
         type: 3}
       propertyPath: m_RootOrder

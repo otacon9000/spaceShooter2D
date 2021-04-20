@@ -146,10 +146,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 1
-  _enemyLife: 3
-  _speed: 4
+  _enemyLives: 1
+  _speed: 3
   _points: 10
-  _laserPrefab: {fileID: 2591709517426339492, guid: 60b2699366ff1c245bb5efac579a4192,
+  _laserPrefab: {fileID: 7743141023146345281, guid: f0760760751291d4dbf900f0a5960a31,
     type: 3}
   _fireRate: 3
   _explosionPrefab: {fileID: 2888991776269412553, guid: 66efc97ca9e401845bdacbaa25f38f65,

@@ -336,7 +336,11 @@ public class Player : MonoBehaviour
         while(_attractiveRadius)
         {
 
-            hit.transform.position = Vector3.Lerp(hit.transform.position, transform.position, Time.deltaTime/10);
+            if(hit != null)
+            {
+                hit.transform.position = Vector3.Lerp(hit.transform.position, transform.position, Time.deltaTime / 10);
+            }
+                
             yield return null;
         }
     }

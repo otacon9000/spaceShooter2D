@@ -11,6 +11,8 @@ public class PowerUp : MonoBehaviour
     private int _powerUpID = 0;
     [SerializeField]
     private AudioClip _powerUpClip;
+    [SerializeField]
+    private GameObject _explosionPrefab;
 
     void Update()
     {
@@ -61,6 +63,13 @@ public class PowerUp : MonoBehaviour
                 }           
             }          
             Destroy(this.gameObject);
+        }
+        if (other.gameObject.CompareTag("EnemyLaser")) 
+        {
+            _speed = 0;
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject, 0.5f);
+            
         }
     }
 }
