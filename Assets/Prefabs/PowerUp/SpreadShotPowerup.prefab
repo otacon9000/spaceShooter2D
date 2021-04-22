@@ -140,6 +140,7 @@ MonoBehaviour:
   _powerUpClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   _explosionPrefab: {fileID: 2888991776269412553, guid: 66efc97ca9e401845bdacbaa25f38f65,
     type: 3}
+  _spawnProb: 0.3
 --- !u!82 &416711832819103547
 AudioSource:
   m_ObjectHideFlags: 0

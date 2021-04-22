@@ -156,6 +156,7 @@ MonoBehaviour:
   _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _shildIsActive: 0
   _shields: {fileID: 0}
+  _spawnProb: 5
 --- !u!82 &3218908123688339964
 AudioSource:
   m_ObjectHideFlags: 0

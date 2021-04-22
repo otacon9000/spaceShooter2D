@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6174109745107876089}
   - component: {fileID: 2219323859451553698}
   m_Layer: 0
-  m_Name: Enemy_v4
+  m_Name: Enemy_aggressive
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,17 +145,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyType: 3
-  _enemylife: 1
+  _enemyLives: 1
   _speed: 3
   _points: 10
-  _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _laserPrefab: {fileID: 2591709517426339492, guid: 60b2699366ff1c245bb5efac579a4192,
     type: 3}
+  _fireRate: 3
   _explosionPrefab: {fileID: 2888991776269412553, guid: 66efc97ca9e401845bdacbaa25f38f65,
     type: 3}
-  _fireRate: 3
+  _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _shildIsActive: 0
   _shields: {fileID: 0}
+  _spawnProb: 3
 --- !u!82 &2219323859451553698
 AudioSource:
   m_ObjectHideFlags: 0
@@ -242,7 +243,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 1.1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

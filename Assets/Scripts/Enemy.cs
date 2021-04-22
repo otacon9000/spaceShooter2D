@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _shields;
 
+
     private void Awake()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();      
@@ -203,4 +204,6 @@ public class Enemy : MonoBehaviour
             _shildIsActive = false;
         }
     }
+
+
 }

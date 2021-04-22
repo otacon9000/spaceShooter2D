@@ -13,6 +13,8 @@ public class PowerUp : MonoBehaviour
     private AudioClip _powerUpClip;
     [SerializeField]
     private GameObject _explosionPrefab;
+    [SerializeField][Range(0,1)]
+    private float _spawnProb;
 
     void Update()
     {
@@ -74,5 +76,9 @@ public class PowerUp : MonoBehaviour
             Destroy(this.gameObject, 0.5f);
             
         }
+    }
+    public float GetSpawnProbability()
+    {
+        return _spawnProb;
     }
 }
