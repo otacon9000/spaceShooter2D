@@ -294,6 +294,8 @@ public class Player : MonoBehaviour
     public void RemoveAmmo()
     {
         _currentAmmo = 0;
+        _uiManager.UpdateAmmoCounter(_currentAmmo, _maxAmmo);
+
     }
 
    
