@@ -33,6 +33,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _shields;
 
+    [SerializeField]
+    [Range(0, 1)]
+    private float _spawnProb;
 
     private void Awake()
     {
@@ -165,7 +168,7 @@ public class Enemy : MonoBehaviour
                     float randomX = Random.Range(-8, 8);
                     transform.position = new Vector3(randomX, 7f, 0);
                 }
-                if (hit != null && (hit.CompareTag("Player") || hit.CompareTag("Shields")))
+                if (hit != null && (hit.CompareTag("Player") || hit.CompareTag("Player Shields")))
                 {
                     Vector3 playerPosition = hit.transform.position;
                     transform.position = Vector3.Lerp(transform.position, playerPosition, _speed  * Time.deltaTime);
@@ -205,5 +208,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
+    public float GetSpawnProbability()
+    {
+        return _spawnProb;
+    }
 }

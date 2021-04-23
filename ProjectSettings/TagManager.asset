@@ -9,6 +9,7 @@ TagManager:
   - PowerUp
   - Shields
   - EnemyLaser
+  - Player Shields
   layers:
   - Default
   - TransparentFX

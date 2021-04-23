@@ -65,13 +65,13 @@ public class Player : MonoBehaviour
     private AudioClip _noBulletClip;
     private AudioSource _audioSource;
 
+
     void Awake()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
         _cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
-
         if (_spawnManager == null)
         {
             Debug.LogError("The SpawnManager is NULL.");
