@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
 
     public enum typeOfEnemy { normal, shields, scoreEnemy, aggressive, boss };
+    public enum bossState { spawn, move, superAttack, die}
     [SerializeField]
     private typeOfEnemy _enemyType;
     [SerializeField]
