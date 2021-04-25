@@ -5,8 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    public enum typeOfEnemy { normal, shields, scoreEnemy, aggressive, boss };
-    public enum bossState { spawn, move, superAttack, die}
+    public enum typeOfEnemy { normal, shields, scoreEnemy, aggressive };
     [SerializeField]
     private typeOfEnemy _enemyType;
     [SerializeField]
@@ -66,8 +65,6 @@ public class Enemy : MonoBehaviour
         if (_enemyType == typeOfEnemy.shields)   
         {
             _shildIsActive = true;
-
-
             _shields.gameObject.SetActive(true);
         }
     }
@@ -113,7 +110,6 @@ public class Enemy : MonoBehaviour
                 _enemyLives--;
                 if (_enemyLives < 1)
                 {
-
                     if (_player != null)
                     {
                         _player.AddScore(_points);
@@ -124,15 +120,13 @@ public class Enemy : MonoBehaviour
                     Destroy(GetComponent<Collider2D>());
                     Destroy(this.gameObject, 1f);
                 }
-            
             }
         }
     
     }
 
     void CalculateMove()
-    {
-        
+    {     
         Collider2D hit = Physics2D.OverlapCircle(transform.position, 3f);
 
         switch (_enemyType) 
@@ -172,16 +166,11 @@ public class Enemy : MonoBehaviour
                 if (hit != null && (hit.CompareTag("Player") || hit.CompareTag("Player Shields")))
                 {
                     Vector3 playerPosition = hit.transform.position;
-                    transform.position = Vector3.Lerp(transform.position, playerPosition, _speed  * Time.deltaTime);
+                    transform.position = Vector3.Slerp(transform.position, playerPosition, _speed * 4 * Time.deltaTime);
                 }
                 break;
-            case typeOfEnemy.boss:
-                //do boss behavior
-                break;
-
             default:
                 break;
-
         }
 
     }
@@ -196,8 +185,7 @@ public class Enemy : MonoBehaviour
         foreach (Laser element in lasers)
         {
             element.AssingEnemyLaser();
-        }
-        
+        } 
     }
 
     void DeactivateShields()

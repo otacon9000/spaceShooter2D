@@ -141,6 +141,7 @@ MonoBehaviour:
   _explosionPrefab: {fileID: 2888991776269412553, guid: 66efc97ca9e401845bdacbaa25f38f65,
     type: 3}
   _spawnProb: 1
+  _cameraTransform: {fileID: 0}
 --- !u!82 &1444261075988919050
 AudioSource:
   m_ObjectHideFlags: 0
@@ -153,8 +154,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.5
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Spatialize: 0

@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver)
         {
-            SceneManager.LoadScene(1); //current game scene 
+            SceneManager.LoadScene(1); 
         }
         if (Input.GetKeyDown(KeyCode.Escape) && _isGameOver)
         {
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.M) && _isGameOver)
         {
-            SceneManager.LoadScene(0); // MainMenu scene 
+            SceneManager.LoadScene(0); 
         }
     }
 
@@ -28,4 +28,6 @@ public class GameManager : MonoBehaviour
     {
         _isGameOver = true;
     }
+
+
 }

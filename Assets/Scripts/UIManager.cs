@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _gameOverText;
     [SerializeField]
+    private Text _youWinText;
+    [SerializeField]
     private Text _restartText;
     [SerializeField]
     private Sprite[] _liveSprite;
@@ -56,12 +58,22 @@ public class UIManager : MonoBehaviour
         _ammoText.text =  ammoCounter.ToString() + " / " + maxAmmo.ToString() ;
     }
 
-    public void GameOverSequence()
+    public void GameOverSequence(bool isWin = false)
     {
-        _gameOverText.gameObject.SetActive(true);
-        _restartText.gameObject.SetActive(true);
-        _gameManager.GameOver();
-        StartCoroutine(GameOverFlickerRoutine());
+        if (!isWin)
+        {
+            _gameOverText.gameObject.SetActive(true);
+            _restartText.gameObject.SetActive(true);
+            _gameManager.GameOver();
+            StartCoroutine(GameOverFlickerRoutine());
+        }
+        else
+        {
+            _youWinText.gameObject.SetActive(true);
+            _restartText.gameObject.SetActive(true);
+            _gameManager.GameOver();
+            StartCoroutine(YouWinFlickerRoutine());
+        }
     }
 
     public void SetMaxThrusterValue(float thrusterValue)
@@ -82,6 +94,16 @@ public class UIManager : MonoBehaviour
             _gameOverText.text = "GAME OVER";
             yield return new WaitForSeconds(0.5f);
             _gameOverText.text = "";
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+    IEnumerator YouWinFlickerRoutine()
+    {
+        while (true)
+        {
+           _youWinText.text = "YOU WIN";
+            yield return new WaitForSeconds(0.5f);
+            _youWinText.text = "";
             yield return new WaitForSeconds(0.5f);
         }
     }

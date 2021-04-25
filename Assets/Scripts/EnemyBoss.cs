@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBoss : MonoBehaviour
 {
-    public enum BossState { spawn, moveLeft, moveRight, superAttack, die }
+    public enum BossState { spawn, moveLeft, moveRight }
     [SerializeField]
     private BossState _bossState;
     [SerializeField]
@@ -26,14 +26,16 @@ public class EnemyBoss : MonoBehaviour
     private Player _player;
     private Rigidbody2D _rb;
 
-
-
+    private UIManager _uiManager;
+    private SpawnManager _spawnManager;
 
     private void Awake()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _rb = GetComponent<Rigidbody2D>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
 
         if (_player == null)
         {
@@ -53,7 +55,14 @@ public class EnemyBoss : MonoBehaviour
         {
             Debug.Log("Rigidbody2D is Null.");
         }
-
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UI Manager is NULL.");
+        }
+        if (_spawnManager == null)
+        {
+            Debug.LogError("The SpawnManager is NULL.");
+        }
     }
 
 
@@ -70,9 +79,6 @@ public class EnemyBoss : MonoBehaviour
 
     void CalculateMove()
     {
-        
-        Collider2D hit = Physics2D.OverlapCircle(transform.position, 3f);
-
         switch (_bossState)
         {
             case BossState.spawn:
@@ -93,12 +99,9 @@ public class EnemyBoss : MonoBehaviour
                 {
                     _bossState = BossState.moveLeft;
                 }
-             
-                //super attack with prob
                 break;
             case BossState.moveLeft:
-              
-       
+
                 if (transform.position.x > -8)
                 {
                     transform.Translate(Vector3.left * _speed * Time.deltaTime);
@@ -107,27 +110,16 @@ public class EnemyBoss : MonoBehaviour
                 {
                     _bossState = BossState.moveRight;
                 }
-                //super attack with prob
                 break;
-
-            case BossState.superAttack:
-
-
-            case BossState.die:
-
-                break;
-       
 
             default:
                 break;
-
         }
-
     }
 
     void FireLaser()
     {
-        _fireRate = Random.Range(1f, 2.0f);
+        _fireRate = Random.Range(0.5f, 1.5f);
         _canFire = Time.time + _fireRate;
 
         GameObject enemyLaser = Instantiate(_laserPrefab[Random.Range(0,_laserPrefab.Length)], transform.position, Quaternion.identity);
@@ -148,10 +140,23 @@ public class EnemyBoss : MonoBehaviour
             {
                 _player.Damage();
             }
-            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+          
 
-            _audioSource.Play();
-            //if enemyLives < 1  collide player 
+            if(_enemyLives < 1)
+            {
+                if (_player != null)
+                {
+                    _player.AddScore(_points);
+                }
+                Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+                
+                _speed = 0;
+                _audioSource.Play();
+                _uiManager.GameOverSequence(true);
+                _spawnManager.OnEndGame();
+                Destroy(GetComponent<Collider2D>());
+                Destroy(this.gameObject, 1f);
+            } 
 
         }
         if (other.CompareTag("Laser"))
@@ -167,6 +172,8 @@ public class EnemyBoss : MonoBehaviour
                 Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
                 _speed = 0;
                 _audioSource.Play();
+                _uiManager.GameOverSequence(true);
+                _spawnManager.OnEndGame();
                 Destroy(GetComponent<Collider2D>());
                 Destroy(this.gameObject, 1f);
             }

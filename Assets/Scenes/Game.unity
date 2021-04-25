@@ -457,7 +457,7 @@ MonoBehaviour:
   _thrusterMaxValue: 10
   _thrusterConsume: 2
   _fireRate: 0.15
-  _maxAmmo: 15
+  _maxAmmo: 25
   _laserPrefab: {fileID: 6670858977806780305, guid: fcc742b619a3826419454a820b17b04e,
     type: 3}
   _tripleShotPrefab: {fileID: 1725804027508821909, guid: be5433683bff20841bd51b9e11896835,
@@ -854,7 +854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 53.1, y: -25.1}
+  m_AnchoredPosition: {x: 53.099976, y: -25.099976}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &691901611
@@ -901,26 +901,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 246cefcefff4e944c91738d6ef2a4ce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waves:
-  - indexOfWave: 1
-    maxEnemies: 4
+  _firstWave:
+    indexOfWave: 1
+    maxEnemies: 10
     enemies:
     - {fileID: 2421840133322956750, guid: e4861dbcae16fe940ab4b252c6a0fef4, type: 3}
     - {fileID: 8013063992403166306, guid: 1eb7e5d0cee4c4f4496076c767a889b5, type: 3}
-    specialEnemy: {fileID: 0}
-  - indexOfWave: 1
-    maxEnemies: 4
+    specialEnemy: {fileID: 2084144692844316992, guid: a0b57d75d5c353443a88803525114d37,
+      type: 3}
+  _secondWave:
+    indexOfWave: 2
+    maxEnemies: 15
     enemies:
     - {fileID: 2421840133322956750, guid: e4861dbcae16fe940ab4b252c6a0fef4, type: 3}
     - {fileID: 8013063992403166306, guid: 1eb7e5d0cee4c4f4496076c767a889b5, type: 3}
     - {fileID: 1439848332150665616, guid: ee4c52bcb9eff3548a780f61579b3115, type: 3}
     specialEnemy: {fileID: 2084144692844316992, guid: a0b57d75d5c353443a88803525114d37,
       type: 3}
-  _enemyPrefab:
-  - {fileID: 2421840133322956750, guid: e4861dbcae16fe940ab4b252c6a0fef4, type: 3}
-  - {fileID: 8013063992403166306, guid: 1eb7e5d0cee4c4f4496076c767a889b5, type: 3}
-  - {fileID: 2084144692844316992, guid: a0b57d75d5c353443a88803525114d37, type: 3}
-  - {fileID: 1439848332150665616, guid: ee4c52bcb9eff3548a780f61579b3115, type: 3}
+  _bossWave:
+    indexOfWave: 0
+    maxEnemies: 4
+    enemies:
+    - {fileID: 2421840133322956750, guid: e4861dbcae16fe940ab4b252c6a0fef4, type: 3}
+    - {fileID: 8013063992403166306, guid: 1eb7e5d0cee4c4f4496076c767a889b5, type: 3}
+    - {fileID: 1439848332150665616, guid: ee4c52bcb9eff3548a780f61579b3115, type: 3}
+    specialEnemy: {fileID: 1827100878576925451, guid: 970f55e14c6248d4fbefb5f43abcbd70,
+      type: 3}
   _enemyContainer: {fileID: 1916576519}
   _PowerUpPrefab:
   - {fileID: 3419012729919617058, guid: d91634a32a89c7d438505643feedefec, type: 3}
@@ -930,7 +936,6 @@ MonoBehaviour:
   - {fileID: 1848945619553177074, guid: a6285a075ff3bac45bfd040f27c37430, type: 3}
   - {fileID: 4565262428460239066, guid: fae9bdcfca5f5044f8fba876adf5abf5, type: 3}
   - {fileID: 641866226765696174, guid: 0bf127478ca61c34ca5810ddcf7920da, type: 3}
-  _maxEnemies: 4
 --- !u!1 &693090869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,7 +1131,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 154.9, y: -9.4}
+  m_AnchoredPosition: {x: 154.90002, y: -9.400024}
   m_SizeDelta: {x: 111.618164, y: 35.25885}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &699176341
@@ -1207,6 +1212,7 @@ MonoBehaviour:
   _livesImage: {fileID: 671179502}
   _thrusterSlider: {fileID: 1054021197}
   _gameOverText: {fileID: 1704029138}
+  _youWinText: {fileID: 2117364096}
   _restartText: {fileID: 248862250}
   _liveSprite:
   - {fileID: 21300000, guid: ba53e111f0125654cabfd4eefaf3a657, type: 3}

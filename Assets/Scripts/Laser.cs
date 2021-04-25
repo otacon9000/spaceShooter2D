@@ -8,13 +8,12 @@ public class Laser : MonoBehaviour
     private float _speed = 8f;
     private bool _isEnemyLaser = false;
 
-
     void Update()
     {
-      if(_isEnemyLaser)
+        if (_isEnemyLaser)
         {
             MoveDown();
-        }    
+        }
         else
         {
             MoveUp();
@@ -32,7 +31,6 @@ public class Laser : MonoBehaviour
                 Destroy(transform.parent.gameObject);
             }
             Destroy(this.gameObject);
-
         }
     }
     void MoveDown()
@@ -46,7 +44,6 @@ public class Laser : MonoBehaviour
                 Destroy(transform.parent.gameObject);
             }
             Destroy(this.gameObject);
-
         }
     }
 
@@ -65,7 +62,6 @@ public class Laser : MonoBehaviour
             {
                 player.Damage();
             }
-            
         }
     }
 

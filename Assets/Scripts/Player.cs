@@ -128,7 +128,6 @@ public class Player : MonoBehaviour
         else
         {
             _attractiveRadius = false;
-            //StopCoroutine("AttractivePickupRoutine");
         }
 
     }
@@ -235,7 +234,7 @@ public class Player : MonoBehaviour
             if (_lives < 1)
             {
                 Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
-                _spawnManager.OnPlayerDeath();
+                _spawnManager.OnEndGame();
                 Destroy(this.gameObject);
             }
         }
@@ -295,7 +294,6 @@ public class Player : MonoBehaviour
     {
         _currentAmmo = 0;
         _uiManager.UpdateAmmoCounter(_currentAmmo, _maxAmmo);
-
     }
 
    
@@ -339,15 +337,12 @@ public class Player : MonoBehaviour
 
     IEnumerator AttractivePickupRoutine(Collider2D hit)
     {
-        
         while(_attractiveRadius)
         {
-
             if(hit != null)
             {
                 hit.transform.position = Vector3.Lerp(hit.transform.position, transform.position, Time.deltaTime / 10);
-            }
-                
+            }              
             yield return null;
         }
     }

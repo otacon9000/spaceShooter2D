@@ -14,39 +14,38 @@ public class SpawnManager : MonoBehaviour
         public GameObject specialEnemy;
 
     }
-    [SerializeField]
-    private Waves[] _waves;
 
+    [Header("Enemy Waves")]
     [SerializeField]
-    private GameObject[] _enemyPrefab;
+    private Waves _firstWave;
+    [SerializeField]
+    private Waves _secondWave;
+    [SerializeField]
+    private Waves _bossWave;
+    private int _currentWave;
+    private int _enemiesCounter;
     [SerializeField]
     private GameObject _enemyContainer;
+
+    [Header("Power-Ups")]
     [SerializeField]
     private GameObject[] _PowerUpPrefab;
     [SerializeField]
     private WaitForSeconds _waitEnemy = new WaitForSeconds(5.0f);
 
-    private int _currentWave;
-    private int _enemiesCounter;
-    [SerializeField]
-    private int _maxEnemies = 10;
-
     private bool _stopSpawn = false;
+    private bool _bossIsSpawned = false;
 
     void Start()
     {
         _currentWave = 1;
         _enemiesCounter = 0;
-            
+        _bossIsSpawned = false;
     }
    
-
-   
-
     public void StartSpawning()
     {
         StartCoroutine(PowerUpSpawnRoutine());
-        //StartCoroutine(EnemySpawnRoutine());
         StartCoroutine(EnemyWavesRoutine());
     }
 
@@ -64,22 +63,21 @@ public class SpawnManager : MonoBehaviour
             switch(_currentWave)
             {
                 case 1:
-                    if (_enemiesCounter < _waves[_currentWave - 1].maxEnemies)
+                    if (_enemiesCounter < _firstWave.maxEnemies)
                     {
-                        int randomEnemy = Random.Range(0, _waves[_currentWave - 1].enemies.Length);
-                        if (Random.value <= _waves[_currentWave - 1].enemies[randomEnemy].GetComponent<Enemy>().GetSpawnProbability())
+                        int randomEnemy = Random.Range(0, _firstWave.enemies.Length);
+                        if (Random.value <= _firstWave.enemies[randomEnemy].GetComponent<Enemy>().GetSpawnProbability())
                         {
-                            Instantiate(_waves[_currentWave - 1].enemies[randomEnemy], spawnPosition, Quaternion.identity, _enemyContainer.transform);
+                            Instantiate(_firstWave.enemies[randomEnemy], spawnPosition, Quaternion.identity, _enemyContainer.transform);
                             _enemiesCounter++;
                             yield return _waitEnemy;
                         }
-                        if(Random.value <= 0.1 && _waves[_currentWave - 1].specialEnemy != null)
+                        if(Random.value <= 0.1 && _firstWave.specialEnemy != null)
                         {
-                            Instantiate(_waves[_currentWave - 1].specialEnemy, spawnPos2, Quaternion.identity);
+                            Instantiate(_firstWave.specialEnemy, spawnPos2, Quaternion.identity);
                             _enemiesCounter++;
                             yield return _waitEnemy;
                         }
-
                     }
                     else
                     {
@@ -90,22 +88,21 @@ public class SpawnManager : MonoBehaviour
                     }
                     break;
                 case 2:
-                    if (_enemiesCounter < _waves[_currentWave - 1].maxEnemies)
+                    if (_enemiesCounter < _secondWave.maxEnemies)
                     {
-                        int randomEnemy = Random.Range(0, _waves[_currentWave - 1].enemies.Length);
-                        if (Random.value <= _waves[_currentWave - 1].enemies[randomEnemy].GetComponent<Enemy>().GetSpawnProbability())
+                        int randomEnemy = Random.Range(0, _secondWave.enemies.Length);
+                        if (Random.value <= _secondWave.enemies[randomEnemy].GetComponent<Enemy>().GetSpawnProbability())
                         {
-                            Instantiate(_waves[_currentWave - 1].enemies[randomEnemy], spawnPosition, Quaternion.identity, _enemyContainer.transform);
+                            Instantiate(_secondWave.enemies[randomEnemy], spawnPosition, Quaternion.identity, _enemyContainer.transform);
                             _enemiesCounter++;
                             yield return _waitEnemy;
                         }
-                        if (Random.value <= 0.1 && _waves[_currentWave - 1].specialEnemy != null)
+                        if (Random.value <= 0.1 && _secondWave.specialEnemy != null)
                         {
-                            Instantiate(_waves[_currentWave - 1].specialEnemy, spawnPos2, Quaternion.identity);
+                            Instantiate(_secondWave.specialEnemy, spawnPos2, Quaternion.identity);
                             _enemiesCounter++;
                             yield return _waitEnemy;
                         }
-
                     }
                     else
                     {
@@ -115,64 +112,38 @@ public class SpawnManager : MonoBehaviour
                         yield return _waitEnemy;
                     }
                     break;
+                case 3:
+                    if (_enemiesCounter < _bossWave.maxEnemies && _bossWave != null)
+                    {
+                        int randomEnemy = Random.Range(0, _bossWave.enemies.Length);
+                        if (Random.value <= _bossWave.enemies[randomEnemy].GetComponent<Enemy>().GetSpawnProbability())
+                        {
+                            Instantiate(_bossWave.enemies[randomEnemy], spawnPosition, Quaternion.identity, _enemyContainer.transform);
+                            _enemiesCounter++;
+                            yield return _waitEnemy;
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Boss wave ended");
+                        if (_bossIsSpawned == false && _bossWave.specialEnemy != null)
+                        {
+                            _bossIsSpawned = true;
+                            Instantiate(_bossWave.specialEnemy, new Vector3(0, 10, 0), Quaternion.identity);
+                            _currentWave++;
+                            yield return _waitEnemy;
+                        }
+                        yield return _waitEnemy;
+                    }
+                    break;
                 default:
                     Debug.Log("Def");
                     yield return _waitEnemy;
                     break;
-
             }
         }
     }
 
-
-    IEnumerator EnemySpawnRoutine()
-    {
-        yield return new WaitForSeconds(2.0f);
-        
-        while(_stopSpawn == false)
-        {
-            
-            float randomX = Random.Range(-8.0f, 8.0f);
-            Vector3 spawnPosition = new Vector3(randomX, 7f, 0);
-            Vector3 spawnPos2 = new Vector3(-13f, 6f, 0f);
-            if (_enemiesCounter < _maxEnemies)
-            {
-                if (Random.value <= 0.7)
-                {
-                    Instantiate(_enemyPrefab[0], spawnPosition, Quaternion.identity, _enemyContainer.transform);
-                    _enemiesCounter++;
-                    yield return _waitEnemy;
-                }
-
-                if (Random.value <= 0.5)
-                {
-                    Instantiate(_enemyPrefab[1], spawnPosition, Quaternion.identity, _enemyContainer.transform);
-                    _enemiesCounter++;
-                    yield return _waitEnemy;
-                }
-
-                if (Random.value <= 0.1)
-                {
-                    Instantiate(_enemyPrefab[2], spawnPos2, Quaternion.identity, _enemyContainer.transform);
-                    _enemiesCounter++;
-                    yield return _waitEnemy;
-                }
-                if (Random.value <= 0.4)
-                {
-                    Instantiate(_enemyPrefab[3], spawnPosition, Quaternion.identity, _enemyContainer.transform);
-                    _enemiesCounter++;
-                    yield return _waitEnemy;
-                }
-            }
-            else
-            {
-                Debug.Log("end of wave");
-                yield return null;
-            }
-        }
-    }
-
-    
     IEnumerator PowerUpSpawnRoutine()
     {
         while(_stopSpawn == false)
@@ -182,17 +153,15 @@ public class SpawnManager : MonoBehaviour
             Vector3 spawnPosition = new Vector3(randomX, 7f, 0);
             int randomPowerUp = Random.Range(0, _PowerUpPrefab.Length);
 
-
             if (Random.value <= _PowerUpPrefab[randomPowerUp].GetComponent<PowerUp>().GetSpawnProbability()) 
             {
                 Instantiate(_PowerUpPrefab[randomPowerUp], spawnPosition, Quaternion.identity);
             }
-
         }
         
     }
 
-    public void OnPlayerDeath()
+    public void OnEndGame()
     {
         _stopSpawn = true;
         StopAllCoroutines();

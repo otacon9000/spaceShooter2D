@@ -16,6 +16,7 @@ public class PowerUp : MonoBehaviour
     [SerializeField][Range(0,1)]
     private float _spawnProb;
 
+
     void Update()
     {
         Move();   
@@ -37,6 +38,7 @@ public class PowerUp : MonoBehaviour
             Player player = other.transform.GetComponent<Player>();
 
             AudioSource.PlayClipAtPoint(_powerUpClip, transform.position);
+
             if (player != null)
             {
                 switch(_powerUpID)

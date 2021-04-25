@@ -148,10 +148,10 @@ MonoBehaviour:
   _enemyLives: 9
   _speed: 1
   _points: 50
-  _laserPrefab: {fileID: 7743141023146345281, guid: f0760760751291d4dbf900f0a5960a31,
+  _laserPrefab: {fileID: 7743141023146345281, guid: d199afb25adddb143ba717425c29e4c4,
     type: 3}
   _fireRate: 3
-  _explosionPrefab: {fileID: 2888991776269412553, guid: 66efc97ca9e401845bdacbaa25f38f65,
+  _explosionPrefab: {fileID: 2888991776269412553, guid: 77676033e02353c469e519d8a2ab3f77,
     type: 3}
   _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _shildIsActive: 0
