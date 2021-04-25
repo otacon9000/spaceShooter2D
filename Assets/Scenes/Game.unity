@@ -907,8 +907,7 @@ MonoBehaviour:
     enemies:
     - {fileID: 2421840133322956750, guid: e4861dbcae16fe940ab4b252c6a0fef4, type: 3}
     - {fileID: 8013063992403166306, guid: 1eb7e5d0cee4c4f4496076c767a889b5, type: 3}
-    specialEnemy: {fileID: 2084144692844316992, guid: a0b57d75d5c353443a88803525114d37,
-      type: 3}
+    specialEnemy: {fileID: 0}
   _secondWave:
     indexOfWave: 2
     maxEnemies: 15
@@ -919,8 +918,8 @@ MonoBehaviour:
     specialEnemy: {fileID: 2084144692844316992, guid: a0b57d75d5c353443a88803525114d37,
       type: 3}
   _bossWave:
-    indexOfWave: 0
-    maxEnemies: 4
+    indexOfWave: 3
+    maxEnemies: 15
     enemies:
     - {fileID: 2421840133322956750, guid: e4861dbcae16fe940ab4b252c6a0fef4, type: 3}
     - {fileID: 8013063992403166306, guid: 1eb7e5d0cee4c4f4496076c767a889b5, type: 3}

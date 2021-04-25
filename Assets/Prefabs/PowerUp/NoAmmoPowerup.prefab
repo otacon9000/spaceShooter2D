@@ -138,9 +138,9 @@ MonoBehaviour:
   _speed: 3
   _powerUpID: 6
   _powerUpClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
-  _explosionPrefab: {fileID: 2888991776269412553, guid: 66efc97ca9e401845bdacbaa25f38f65,
+  _explosionPrefab: {fileID: 2888991776269412553, guid: 77676033e02353c469e519d8a2ab3f77,
     type: 3}
-  _spawnProb: 0.7
+  _spawnProb: 0.8
 --- !u!82 &641866226765696172
 AudioSource:
   m_ObjectHideFlags: 0

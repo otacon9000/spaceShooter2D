@@ -8,7 +8,6 @@ public class SpawnManager : MonoBehaviour
     [System.Serializable]
     public class Waves
     {
-        public int indexOfWave;
         public int maxEnemies = 10;
         public GameObject[] enemies;        
         public GameObject specialEnemy;
