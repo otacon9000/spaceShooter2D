@@ -11,8 +11,7 @@ public class UIManagerM : MonoBehaviour
     private Image _livesImage;
     [SerializeField]
     private Text _gameOverText;
-    [SerializeField]
-    private Text _restartText;
+
     [SerializeField]
     private Sprite[] _liveSprite;
 
@@ -52,13 +51,12 @@ public class UIManagerM : MonoBehaviour
         if (!isWin)
         {
             _gameOverText.gameObject.SetActive(true);
-            _restartText.gameObject.SetActive(true);
             _gameManager.GameOver();
             StartCoroutine(GameOverFlickerRoutine());
         }
         else
         {
-            _restartText.gameObject.SetActive(true);
+            //_restartText.gameObject.SetActive(true);
             _gameManager.GameOver();
         }
     }

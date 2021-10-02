@@ -37,7 +37,7 @@ public class SpawnManagerM : MonoBehaviour
     private void Start()
     {
         StartCoroutine(EnemiesSpawnRoutine());
-        //StartCoroutine(PowerUpSpawnRoutine());
+        StartCoroutine(PowerUpSpawnRoutine());
     }
 
 
@@ -70,7 +70,7 @@ public class SpawnManagerM : MonoBehaviour
             Vector3 spawnPosition = new Vector3(xPosSpawn[randomX], 9, 0);
             int randomPowerUp = Random.Range(0, _powerUpsPrefab.Length);
 
-            if (Random.value <= _powerUpsPrefab[randomPowerUp].GetComponent<PowerUp>().GetSpawnProbability())
+            if (Random.value <= _powerUpsPrefab[randomPowerUp].GetComponent<PowerUpMobile>().GetSpawnProbability())
             {
                 Instantiate(_powerUpsPrefab[randomPowerUp], spawnPosition, Quaternion.identity);
             }
