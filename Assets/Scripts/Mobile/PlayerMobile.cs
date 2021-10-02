@@ -63,14 +63,39 @@ public class PlayerMobile : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+#if !UNITY_EDITOR
+        InputManager.OnChangeDirection += CalculateMovement;
+#endif
+    }
+
+    private void OnDisable()
+    {
+#if !UNITY_EDITOR
+        InputManager.OnChangeDirection -= CalculateMovement;
+#endif
+    }
+
+
     private void Update()
     {
+#if UNITY_EDITOR
         CalculateMovement();
-
-        if(autoFire)
+#endif
+        if (autoFire)
             AutoFire();
     }
 
+#if !UNITY_EDITOR
+    private void CalculateMovement(Vector2 _dir)
+    {
+        Debug.Log(_dir);
+        transform.position = _dir.x == 1 ?
+             Vector3.MoveTowards(transform.position, new Vector3(transform.position.x - 2, transform.position.y, transform.position.z), _speed) :
+             Vector3.MoveTowards(transform.position, new Vector3(transform.position.x + 2, transform.position.y, transform.position.z), _speed);
+    }
+#else
     private void CalculateMovement()
     {
         if (Input.GetKeyDown(KeyCode.A) && transform.position.x != -2)
@@ -83,6 +108,7 @@ public class PlayerMobile : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x + 2, transform.position.y, transform.position.z), _speed);
         }
     }
+#endif
 
     private void AutoFire()
     {
