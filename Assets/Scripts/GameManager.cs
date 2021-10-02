@@ -31,13 +31,14 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        //SceneManager.LoadScene("MobileGame");
+        //SceneManager.LoadScene(1);
         Debug.Log("Restart button pressed");
     }
 
     public void GoBackToMenu()
     {
         //main menu
+        //SceneManager.LoadScene(0);
     }
 
 

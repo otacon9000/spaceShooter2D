@@ -2,9 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+Sc
 
 public class UIManagerM : MonoBehaviour
 {
+
+
+
+    [Header("Game UI")]
+    [SerializeField]
+    private GameObject _gamePanel;
+
     [SerializeField]
     private Text _scoreText;
     [SerializeField]
@@ -14,6 +22,11 @@ public class UIManagerM : MonoBehaviour
 
     [SerializeField]
     private Sprite[] _liveSprite;
+
+    [SerializeField]
+    private Button _restartButton;
+    [SerializeField]
+    private Button _menuButton;
 
     private GameManager _gameManager;
 
@@ -29,7 +42,6 @@ public class UIManagerM : MonoBehaviour
             Debug.LogError("Game Manager is NULL.");
         }
     }
-
 
     public void UpdateScore(int playerScore)
     {
@@ -72,5 +84,9 @@ public class UIManagerM : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
+
+
+
+
 
 }
