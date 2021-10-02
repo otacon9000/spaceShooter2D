@@ -37,7 +37,7 @@ public class Laser : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y <= -7)
+        if (transform.position.y <= -8)
         {
             if (transform.parent != null)
             {
@@ -57,7 +57,7 @@ public class Laser : MonoBehaviour
     {
         if(other.CompareTag("Player") && _isEnemyLaser)
         {
-            Player player = other.GetComponent<Player>();
+            PlayerMobile player = other.GetComponent<PlayerMobile>();
             if(player != null)
             {
                 player.Damage();
