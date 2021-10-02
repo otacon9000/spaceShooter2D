@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-Sc
 
 public class UIManagerM : MonoBehaviour
 {
-
-
-
     [Header("Game UI")]
     [SerializeField]
     private GameObject _gamePanel;

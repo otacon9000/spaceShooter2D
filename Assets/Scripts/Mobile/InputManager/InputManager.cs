@@ -1,18 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
-#if !UNITY_EDITOR
 public class InputManager : MonoBehaviour,  Swipe.IGameplayActions{
-
-    [SerializeField]
-    private InputActionAsset m_baseInputs = null;
 
     Swipe controls;
 
-    public delegate void ChangeDirectionHandler(Vector2 _direction);
+    public delegate void ChangeDirectionHandler(float _direction);
     public static event ChangeDirectionHandler OnChangeDirection;
 
-    public void OnEnable()
+    public void Awake()
     {
         if (controls == null)
         {
@@ -26,12 +23,28 @@ public class InputManager : MonoBehaviour,  Swipe.IGameplayActions{
     {
         controls.Gameplay.Disable();
     }
+    
     public void OnChangePosition(InputAction.CallbackContext context){
-        OnChangeDirection(Vector2.zero);
+        OnChangeDirection(0);
     }
+
+    bool enable = true;
+
     public void OnSwipeX(InputAction.CallbackContext context){
-        Vector2 direction = context.ReadValue<Vector2>();
-        OnChangeDirection(direction);
+        if (!enable)
+            return;
+        float direction = context.ReadValue<float>();
+        if (direction > 0.1f || direction < -.1f)
+            StartCoroutine(SendInput(direction));
     }
+
+    IEnumerator SendInput(float dir)
+    {
+        enable = false;
+        if (OnChangeDirection != null)
+            OnChangeDirection(dir);
+        yield return new WaitForSeconds(.2f);
+        enable = true;
+    }
+
 }
-#endif
