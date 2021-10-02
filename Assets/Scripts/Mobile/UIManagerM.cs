@@ -58,7 +58,7 @@ public class UIManagerM : MonoBehaviour
         }
         else
         {
-            _restartText.gameObject.SetActive(true);
+            //_restartText.gameObject.SetActive(true);
             _gameManager.GameOver();
         }
     }
