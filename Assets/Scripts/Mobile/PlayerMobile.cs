@@ -140,6 +140,7 @@ public class PlayerMobile : MonoBehaviour
     public void RemoveAmmo()
     {
         autoFire = false;
+        StartCoroutine(AutoFireOffRoutine());
         
     }
 
