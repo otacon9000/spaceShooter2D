@@ -25,7 +25,8 @@ public class InputManager : MonoBehaviour,  Swipe.IGameplayActions{
     }
     
     public void OnChangePosition(InputAction.CallbackContext context){
-        OnChangeDirection(0);
+        if (OnChangeDirection != null)
+            OnChangeDirection(0);
     }
 
     bool enable = true;
